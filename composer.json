@@ -1,5 +1,5 @@
 {
-    "name": "pondtunes",
+    "name": "pondtunes/pondtunes",
     "type": "library",
     "description": "Library for querying the Apple iTunes Store",
     "keywords": ["apple", "itunes", "webservice"],
@@ -9,6 +9,6 @@
         {"name": "Marcus Stöhr", "email": "dafish@soundtrack-board.de"}
     ],
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.0"
     }
 }

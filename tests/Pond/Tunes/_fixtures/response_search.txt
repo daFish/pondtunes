@@ -1,0 +1,7 @@
+{
+    "resultCount":1,
+    "results":
+    [
+        {"wrapperType":"collection", "collectionType":"Album", "artistId":266740, "collectionId":375145214, "amgArtistId":39429, "amgVideoArtistId":null, "artistName":"James Horner", "collectionName":"The Karate Kid (Music from the Motion Picture)", "collectionCensoredName":"The Karate Kid (Music from the Motion Picture)", "artistViewUrl":"http://itunes.apple.com/de/artist/james-horner/id266740?uo=4", "collectionViewUrl":"http://itunes.apple.com/de/album/the-karate-kid-music-from/id375145214?uo=4", "artworkUrl60":"http://a1.phobos.apple.com/us/r30/Music/c3/fb/8b/mzi.qacwptys.60x60-50.jpg", "artworkUrl100":"http://a1.phobos.apple.com/us/r30/Music/c3/fb/8b/mzi.qacwptys.100x100-75.jpg", "collectionPrice":9.99, "collectionExplicitness":"notExplicit", "trackCount":18, "copyright":"2010 Madison Gate Records, Inc.", "country":"DEU", "currency":"EUR", "releaseDate":"2010-06-01T07:00:00Z", "primaryGenreName":"Soundtrack"} 
+    ]
+}

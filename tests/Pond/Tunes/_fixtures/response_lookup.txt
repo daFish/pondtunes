@@ -1,0 +1,5 @@
+{
+ "resultCount":1,
+ "results": [
+{"wrapperType":"artist", "artistType":"Artist", "artistName":"James Horner", "artistLinkUrl":"http://itunes.apple.com/us/artist/james-horner/id266740?uo=4", "artistId":266740, "amgArtistId":39429, "amgVideoArtistId":null, "primaryGenreName":"Soundtrack", "primaryGenreId":16}]
+}
