@@ -1,0 +1,3 @@
+[submodule "vendor/buzz"]
+	path = vendor/buzz
+	url = https://github.com/kriswallsmith/Buzz.git
