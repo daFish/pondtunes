@@ -308,7 +308,7 @@ abstract class Tunes
 
         if (null === $this->httpClient) {
             // load Buzz autoloader
-            require_once __DIR__ . '/../../vendor/Buzz/lib/Buzz/ClassLoader.php';
+            require_once __DIR__ . '/../../../vendor/Buzz/lib/Buzz/ClassLoader.php';
             ClassLoader::register();
 
             $this->httpClient = new Browser();
@@ -351,7 +351,8 @@ abstract class Tunes
         
         $result = file_get_contents($this->getRawRequestUrl());
         if (self::RESULT_ARRAY === $this->resultFormat) {
-            $resultSet = new ResultSet((array)json_decode($result));
+            $resultSet = json_decode($result, true);
+            $resultSet = new ResultSet($resultSet['results']);
 
             return $resultSet;
         } else {
