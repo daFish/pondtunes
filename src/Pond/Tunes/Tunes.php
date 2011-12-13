@@ -29,7 +29,7 @@ abstract class Tunes
 
     /**
      * Properties with default values
-     * 
+     *
      * @var array
      */
     private $defaultOptions = array(
@@ -50,16 +50,30 @@ abstract class Tunes
      * @var array
      */
     protected static $countryList = array(
-        'ar', 'au', 'at', 'be', 'br', 'ca', 'cl', 'cn',
-        'co', 'cr', 'hr', 'cz', 'dk', 'do', 'ec', 'eg',
-        'sv', 'ee', 'fi', 'fr', 'de', 'gr', 'gt', 'hn',
-        'hk', 'hu', 'in', 'id', 'ie', 'il', 'it', 'jm',
-        'jp', 'kz', 'kr', 'kw', 'lv', 'lb', 'lt', 'lu',
-        'mo', 'my', 'mt', 'mx', 'md', 'nl', 'nz', 'ni',
-        'no', 'pk', 'pa', 'py', 'pe', 'ph', 'pl', 'pt',
-        'qa', 'ro', 'ru', 'sa', 'sg', 'sk', 'si', 'za',
-        'es', 'lk', 'se', 'ch', 'tw', 'th', 'tr', 'gb',
-        'us', 'ae', 'uy', 've', 'vn'
+        'ai', 'ar', 'au', 'ao', 'at', 'ae', 'ag', 'az',
+        'be', 'br', 'by', 'bs', 'bh', 'bb', 'bz', 'bm', 'bo', 'bw', 'bn', 'bg',
+        'ca', 'cl', 'cn', 'co', 'cr', 'cz', 'ch', 'cy',
+        'dk', 'do', 'dz', 'de', 'dm',
+        'ec', 'eg', 'es', 'ee',
+        'fi', 'fr',
+        'gr', 'gt', 'gb', 'gh', 'gy',
+        'hn', 'hk', 'hu', 'hr',
+        'in', 'id', 'ie', 'il', 'it', 'is',
+        'jm', 'jp', 'jo',
+        'kz', 'kr', 'kw', 'ky', 'ke', 'kn',
+        'lv', 'lb', 'lt', 'lu', 'lk', 'lc',
+        'mo', 'my', 'mt', 'mx', 'md', 'mk', 'mg', 'ml', 'mu', 'ms',
+        'nl', 'nz', 'ni', 'no',
+        'om',
+        'pk', 'pa', 'py', 'pe', 'ph', 'pl', 'pt',
+        'qa',
+        'ro', 'ru',
+        'sa', 'sg', 'sk', 'si', 'se', 'sv', 'sn', 'sr',
+        'tw', 'th', 'tr', 'tz', 'tt', 'tn', 'tc',
+        'us',  'uy', 'ug', 'uz',
+        've', 'vn', 'vc', 'vg',
+        'ye',
+        'za',
     );
 
     /**
@@ -348,7 +362,7 @@ abstract class Tunes
         }
 
         $this->buildSpecificRequestUri();
-        
+
         $result = file_get_contents($this->getRawRequestUrl());
         if (self::RESULT_ARRAY === $this->resultFormat) {
             $resultSet = json_decode($result, true);
