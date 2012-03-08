@@ -1,5 +1,5 @@
 {
-    "name": "pondtunes/pondtunes",
+    "name": "pond/tunes",
     "type": "library",
     "description": "Library for querying the Apple iTunes Store",
     "keywords": ["apple", "itunes", "webservice"],
