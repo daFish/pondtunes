@@ -11,8 +11,8 @@
 
 namespace Pond\Tunes;
 
-use Pond\Tunes\Tunes,
-    Pond\Tunes\Search;
+use Pond\Tunes\Tunes;
+use Pond\Tunes\Search;
 
 class TunesTest extends \PHPUnit_Framework_TestCase
 {

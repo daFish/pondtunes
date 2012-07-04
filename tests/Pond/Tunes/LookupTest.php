@@ -11,8 +11,8 @@
 
 namespace Pond\Tunes;
 
-use Pond\Tunes\TunesAbstract,
-    Pond\Tunes\Lookup;
+use Pond\Tunes\Tunes;
+use Pond\Tunes\Lookup;
 
 class LookupTest extends \PHPUnit_Framework_TestCase
 {
