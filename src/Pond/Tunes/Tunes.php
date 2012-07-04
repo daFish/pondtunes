@@ -12,8 +12,6 @@
 namespace Pond\Tunes;
 
 use Pond\Tunes\ResultSet;
-use Buzz\Browser;
-use Buzz\ClassLoader;
 
 abstract class Tunes
 {
@@ -303,11 +301,6 @@ abstract class Tunes
      * @var array
      */
     protected $explicitTypes = array('yes', 'no');
-
-    /**
-     * @var Browser
-     */
-    protected $httpClient = null;
 
     /**
      * Constructor
