@@ -319,14 +319,6 @@ abstract class Tunes
         if (!empty($options)) {
             $this->setOptions($options);
         }
-
-        if (null === $this->httpClient) {
-            // load Buzz autoloader
-            require_once __DIR__ . '/../../../vendor/Buzz/lib/Buzz/ClassLoader.php';
-            ClassLoader::register();
-
-            $this->httpClient = new Browser();
-        }
     }
 
     /**
