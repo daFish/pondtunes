@@ -12,6 +12,7 @@
 namespace Pond\Tunes;
 
 use Pond\Tunes\ResultSet;
+use Buzz\Browser;
 
 abstract class Tunes
 {
@@ -302,6 +303,8 @@ abstract class Tunes
      */
     protected $explicitTypes = array('yes', 'no');
 
+    protected $httpClient;
+
     /**
      * Constructor
      *
@@ -312,6 +315,8 @@ abstract class Tunes
         if (!empty($options)) {
             $this->setOptions($options);
         }
+
+        $this->httpClient = new Browser();
     }
 
     /**
@@ -357,17 +362,22 @@ abstract class Tunes
 
         $this->buildSpecificRequestUri();
 
-        $result = file_get_contents($this->getRawRequestUrl());
+        $response = $this->httpClient->get($this->getRawRequestUrl());
+        if (true !== $response->isOk()) {
+            // throw an exception?
+        }
+
+        $content = $response->getContent();
         if (self::RESULT_ARRAY === $this->resultFormat) {
-            $resultSet = json_decode($result, true);
+            $resultSet = json_decode($content, true);
             $resultSet = new ResultSet($resultSet['results']);
 
             return $resultSet;
         } else {
             // convert JSON-string to array
-            $jsonString = json_decode($result);
+            $jsonString = json_decode($content);
 
-            $this->resultCount = (integer)$jsonString->resultCount;
+            $this->resultCount = (integer) $jsonString->resultCount;
             $this->results     = json_encode($jsonString->results);
 
             return $this->results;

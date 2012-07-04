@@ -8,7 +8,13 @@
     "authors": [
         {"name": "Marcus Stöhr", "email": "dafish@soundtrack-board.de"}
     ],
+    "autoload": {
+        "psr-0": {
+            "Pond": "src/"
+        }
+    },
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.2",
+        "kriswallsmith/buzz": "v0.7"
     }
 }
