@@ -38,11 +38,7 @@ class Lookup extends Tunes
     protected $entity = '';
     
     /**
-     * Builds the request uri for parameters specifically used in:
-     *     - Lookup
-     * 
-     * @throws  \LogicException
-     * @return  void
+     * {@inheritDoc}
      */
     protected function buildSpecificRequestUri()
     {
@@ -75,9 +71,7 @@ class Lookup extends Tunes
     }
 
     /**
-     * Return assembled request url
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getRawRequestUrl()
     {
@@ -132,5 +126,13 @@ class Lookup extends Tunes
     public function getAmgArtistIds()
     {
         return $this->amgArtistIds;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUri()
+    {
+        return $this->serviceUri;
     }
 }

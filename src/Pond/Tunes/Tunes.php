@@ -330,6 +330,15 @@ abstract class Tunes
     }
 
     /**
+     * Return assembled request url
+     *
+     * @abstract
+     *
+     * @return string
+     */
+    abstract public function getRawRequestUrl();
+
+    /**
      * Set configuration
      *
      * @param array $options
@@ -370,7 +379,7 @@ abstract class Tunes
 
             return $resultSet;
         } else {
-        	// convert JSON-string to array
+            // convert JSON-string to array
             $jsonString = json_decode($result);
 
             $this->resultCount = (integer)$jsonString->resultCount;
@@ -383,7 +392,7 @@ abstract class Tunes
     /**
      * Build the request uri for all common parameters
      *
-     * @return void
+     * @return string
      */
     protected function buildRequestUri()
     {
@@ -507,7 +516,7 @@ abstract class Tunes
      *
      * @param string $country
      *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setCountry($country = '')
     {
@@ -523,7 +532,7 @@ abstract class Tunes
      *
      * @param string $language
      *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setLanguage($language = '')
     {
@@ -539,7 +548,7 @@ abstract class Tunes
      *
      * @param string $mediatype
      *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setMediaType($mediatype = '')
     {
@@ -555,7 +564,7 @@ abstract class Tunes
      *
      * @param string $format
      *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setResultFormat($format = self::RESULT_ARRAY)
     {
@@ -581,6 +590,7 @@ abstract class Tunes
      *
      * @param integer $limit
      *
+     * @throws \OutOfBoundsException
      * @return Tunes
      */
     public function setLimit($limit = 100)
@@ -590,7 +600,7 @@ abstract class Tunes
             throw new \OutOfBoundsException('The limit must be within 0 and 200.');
         }
 
-        $this->defaultOptions['limit'] = (integer)$limit;
+        $this->defaultOptions['limit'] = (integer) $limit;
 
         return $this;
     }
@@ -601,8 +611,7 @@ abstract class Tunes
      * @param array $entity
      *
      * @throws \InvalidArgumentException
-     *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setEntity($entity = array())
     {
@@ -674,7 +683,7 @@ abstract class Tunes
      *
      * @param  string $setting
      *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setExplicit($setting = 'yes')
     {
@@ -691,7 +700,7 @@ abstract class Tunes
      *
      * @param integer $version
      *
-     * @return TunesAbstract
+     * @return Tunes
      */
     public function setVersion($version = 2)
     {
@@ -705,10 +714,9 @@ abstract class Tunes
     /**
      * Get the Uri set to query the service
      *
+     * @abstract
+     *
      * @return string
      */
-    public function getUri()
-    {
-        return $this->serviceUri;
-    }
+    abstract public function getUri();
 }

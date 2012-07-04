@@ -28,17 +28,12 @@ class Search extends Tunes
     private $searchTerms = array();
     
     /**
-     * Builds the request uri for parameters specifically used in:
-     *     - Search
-     * 
-     * @throws  \LogicException
-     * @return  void
+     * {@inheritDoc}
      */
     protected function buildSpecificRequestUri()
     {
         $requestParameters = array();
         
-        // trigger parent::_buildRequestUri
         $uri = parent::buildRequestUri();
         if (!empty($uri)) {
             $requestParameters[] = $uri;
@@ -55,9 +50,7 @@ class Search extends Tunes
     }
 
     /**
-     * Return assembled request url
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getRawRequestUrl()
     {
@@ -81,7 +74,8 @@ class Search extends Tunes
     /**
      * Add new search terms
      * 
-     * @param  string|array     $term
+     * @param  string|array $terms
+     *
      * @return Search
      */
     public function setTerms($terms = '')
@@ -90,7 +84,6 @@ class Search extends Tunes
             $terms = explode(' ', $terms);
         }
 
-        // replace all whitespaces with +
         for ($i=0; $i<count($terms); $i++) {
             $terms[$i] = str_replace(' ', '+', $terms[$i]);
         }
@@ -100,6 +93,9 @@ class Search extends Tunes
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getUri()
     {
         return $this->serviceUri;
