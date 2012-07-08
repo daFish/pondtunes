@@ -59,7 +59,7 @@ abstract class Tunes
         'hn', 'hk', 'hu', 'hr',
         'in', 'id', 'ie', 'il', 'it', 'is',
         'jm', 'jp', 'jo',
-        'kz', 'kr', 'kw', 'ky', 'ke', 'kn',
+        'kz', 'kr', 'kw', 'ky', 'ke', 'kn', 'kh',
         'lv', 'lb', 'lt', 'lu', 'lk', 'lc',
         'mo', 'my', 'mt', 'mx', 'md', 'mk', 'mg', 'ml', 'mu', 'ms',
         'nl', 'nz', 'ni', 'no',
@@ -69,7 +69,7 @@ abstract class Tunes
         'ro', 'ru',
         'sa', 'sg', 'sk', 'si', 'se', 'sv', 'sn', 'sr',
         'tw', 'th', 'tr', 'tz', 'tt', 'tn', 'tc',
-        'us',  'uy', 'ug', 'uz',
+        'us', 'uy', 'ug', 'uz',
         've', 'vn', 'vc', 'vg',
         'ye',
         'za',
@@ -303,6 +303,9 @@ abstract class Tunes
      */
     protected $explicitTypes = array('yes', 'no');
 
+    /**
+     * @var Browser
+     */
     protected $httpClient;
 
     /**
@@ -351,20 +354,22 @@ abstract class Tunes
     /**
      * Query the service and save result
      *
-     * @throws  \BadMethodCallException
+     * @throws \BadMethodCallException
+     * @throws \RuntimeException
      * @return  ResultSet|string
      */
     public function request()
     {
         if ('' !== $this->defaultOptions['callback']) {
-            throw new \BadMethodCallException('Cannot run query when callback is set.');
+            $msg = 'Cannot run query when callback is set. Get query using getRawRequestUrl().';
+            throw new \BadMethodCallException($msg);
         }
 
         $this->buildSpecificRequestUri();
 
         $response = $this->httpClient->get($this->getRawRequestUrl());
         if (true !== $response->isOk()) {
-            // throw an exception?
+            throw new \RuntimeException('The request was not successful.');
         }
 
         $content = $response->getContent();

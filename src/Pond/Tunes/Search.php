@@ -20,34 +20,12 @@ class Search extends Tunes
      * 
      * @var string
      */
-    private $serviceUri = 'http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?';
+    private $serviceUri = 'http://itunes.apple.com/search?';
     
     /**
      * @var array
      */
     private $searchTerms = array();
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected function buildSpecificRequestUri()
-    {
-        $requestParameters = array();
-        
-        $uri = parent::buildRequestUri();
-        if (!empty($uri)) {
-            $requestParameters[] = $uri;
-        }
-        
-        if (empty($this->searchTerms)) {
-            throw new \LogicException('Cannot query search service if no terms are set!');
-        }
-        
-        // add terms
-        $requestParameters[] = 'term=' . implode('+', array_map('urlencode', $this->searchTerms));
-        
-        $this->rawRequestUrl = $this->getUri() . implode('&', $requestParameters);
-    }
 
     /**
      * {@inheritDoc}
@@ -94,10 +72,56 @@ class Search extends Tunes
     }
 
     /**
+     * Request information for countries. If no parameter is passed the complete
+     * list of countries will be searched.
+     *
+     * @param array $countries
+     *
+     * @return array
+     */
+    public function requestForCountries($countries = array())
+    {
+        if (empty($countries)) {
+            $countries = self::$countryList;
+        }
+
+        $results = array();
+        foreach ($countries as $country) {
+            $this->setCountry($country);
+
+            $results[$country] = $this->request();
+        }
+
+        return $results;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getUri()
     {
         return $this->serviceUri;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function buildSpecificRequestUri()
+    {
+        $requestParameters = array();
+
+        $uri = parent::buildRequestUri();
+        if (!empty($uri)) {
+            $requestParameters[] = $uri;
+        }
+
+        if (empty($this->searchTerms)) {
+            throw new \LogicException('Cannot query search service if no terms are set!');
+        }
+
+        // add terms
+        $requestParameters[] = 'term=' . implode('+', array_map('urlencode', $this->searchTerms));
+
+        $this->rawRequestUrl = $this->getUri() . implode('&', $requestParameters);
     }
 }

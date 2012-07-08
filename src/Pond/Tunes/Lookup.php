@@ -20,7 +20,7 @@ class Lookup extends Tunes
      * 
      * @var string
      */
-    protected $serviceUri = 'http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsLookup?';
+    protected $serviceUri = 'http://itunes.apple.com/lookup?';
     
     /**
      * @var integer

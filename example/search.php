@@ -13,22 +13,24 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Pond\Tunes\Search;
 
-/* Search for 'Angry Birds' in Apps for the iPad*/
+/* Search for 'Angry Birds' in Apps for the iPad */
 $search = new Search;
 $search->setEntity(
     array(Search::MEDIATYPE_SOFTWARE => 'iPadSoftware')
 );
 $search->setTerms('angry birds');
 $search->setLimit(5);
-$search->setResultFormat(Search::RESULT_ARRAY);
+$search->setResultFormat(Search::RESULT_JSON);
+$search->setCallback('foo');
 
 $results = $search->request();
+
 /* loop over the results */
 foreach ($results as $result) {
-    var_dump($result);
+    // do something with the result
 }
-die;
-/* Search for 'Steve Jobs' in eBooks - utilizes the fluent interface*/
+
+/* Search for 'Steve Jobs' in eBooks - utilizes the fluent interface */
 $search = new Search;
 $search->setEntity(
     array(Search::MEDIATYPE_EBOOK => 'ebook')
