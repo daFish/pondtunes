@@ -17,21 +17,21 @@ class Result
      * @var array
      */
     protected $result = array();
-    
+
     /**
      * Constructor
-     * 
+     *
      * @param array $result
      */
     public function __construct($result = array())
     {
         $this->result = $result;
     }
-    
+
     /**
      * Magic method for retrieving values
      * from result
-     * 
+     *
      * @param string $key
      *
      * @return mixed
@@ -41,7 +41,7 @@ class Result
         if (isset($this->result[$key])) {
             return $this->result[$key];
         }
-        
+
         return null;
     }
 }
