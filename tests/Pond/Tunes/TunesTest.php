@@ -20,14 +20,14 @@ class TunesTest extends \PHPUnit_Framework_TestCase
      * @var Search
      */
     protected $itunesSearch =   null;
-    
+
     public function setUp()
     {
         parent::setUp();
-        
+
         $this->itunesSearch = new Search();
     }
-    
+
     public function testSetTermsAsArray()
     {
         $this->itunesSearch->setTerms(array('christopher', 'gordon'));
@@ -39,32 +39,32 @@ class TunesTest extends \PHPUnit_Framework_TestCase
         $this->itunesSearch->setTerms('star trek');
         $this->assertEquals(array('star', 'trek'), $this->itunesSearch->getTerms());
     }
-    
+
     public function testTermsNotArray()
     {
         $this->itunesSearch->setTerms('star');
         $this->assertEquals(array('star'), $this->itunesSearch->getTerms());
     }
-    
+
     public function testSetGetLimit()
     {
         $this->itunesSearch->setLimit(42);
         $this->assertEquals(42, $this->itunesSearch->limit);
     }
-    
+
     public function testSetGetExplicity()
     {
         $this->itunesSearch->setExplicit('yes');
         $this->assertEquals('yes', $this->itunesSearch->explicit);
     }
-    
+
     public function testSetGetCallback()
     {
         $this->itunesSearch->setResultFormat(Tunes::RESULT_JSON);
         $this->itunesSearch->setCallback('wbFoobar');
         $this->assertEquals('wbFoobar', $this->itunesSearch->callback);
     }
-    
+
     /**
      * @expectedException \LogicException
      */
@@ -72,54 +72,54 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     {
         $this->itunesSearch->setResultFormat(Tunes::RESULT_ARRAY);
         $this->itunesSearch->setCallback('wbFoobar');
-        
+
         $this->fail('An expected exception has not been raised!');
     }
-    
+
     public function testSetGetCountry()
     {
         $this->itunesSearch->setCountry('gb');
         $this->assertEquals('gb', $this->itunesSearch->country);
     }
-    
+
     public function testCountryDefaultValue()
     {
         $this->assertEquals('us', $this->itunesSearch->country);
     }
-    
+
     public function testSetGetCountryOutOfRange()
     {
         $this->itunesSearch->setCountry('dd');
         $this->assertEquals('us', $this->itunesSearch->country);
     }
-    
+
     public function testSetGetLanguage()
     {
         $this->itunesSearch->setLanguage('ja_jp');
         $this->assertEquals('ja_jp', $this->itunesSearch->language);
     }
-    
+
     public function testSetGetMediaType()
     {
         $this->itunesSearch->setMediaType(Tunes::MEDIATYPE_TVSHOW);
         $this->assertEquals(Tunes::MEDIATYPE_TVSHOW, $this->itunesSearch->mediaType);
     }
-    
+
     public function testSetGetResultFormat()
     {
         $this->itunesSearch->setResultFormat(Tunes::RESULT_ARRAY);
         $this->assertEquals(Tunes::RESULT_ARRAY, $this->itunesSearch->getResultFormat());
     }
-    
+
     public function testSetGetEntity()
     {
         $temp = array();
         $temp['music'] = 'musicVideo';
-        
+
         $this->itunesSearch->setEntity($temp);
         $this->assertEquals($temp, $this->itunesSearch->entity);
     }
-    
+
     /**
      * @expectedException \LogicException
      */
@@ -127,7 +127,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     {
         $this->itunesSearch->setEntity();
     }
-    
+
     /**
      * @expectedException \LogicException
      */
@@ -138,16 +138,16 @@ class TunesTest extends \PHPUnit_Framework_TestCase
 
         $this->fail('An expected exception has not been raised!');
     }
-    
+
     public function testSetGetVersion()
     {
         $this->itunesSearch->setVersion(1);
         $this->assertEquals(1, $this->itunesSearch->version);
-        
+
         $this->itunesSearch->setVersion(3);
         $this->assertEquals(1, $this->itunesSearch->version);
     }
-    
+
     /**
      * @expectedException \LogicException
      */
@@ -155,28 +155,28 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     {
         $this->itunesSearch->request();
     }
-    
+
     /**
      * @expectedException \LogicException
      */
     public function testQueryWithCallbackException()
     {
         $this->itunesSearch->setCallback('wsCallback');
-        
+
         $this->itunesSearch->request();
     }
-    
+
     public function testOptionNotSet()
     {
         $this->assertEquals(null, $this->itunesSearch->foobar);
     }
-    
+
     public function testGetRawRequestUrl()
     {
         $this->itunesSearch->setTerms(array('star', 'trek'))
                             ->setCountry('de')
                             ->setCallback('wsCallback');
-        
+
         $this->assertEquals('http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?entity=album&country=de&callback=wsCallback&term=star+trek', $this->itunesSearch->getRawRequestUrl());
     }
 
@@ -188,7 +188,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
         $this->itunesSearch->setMediaType(Tunes::MEDIATYPE_MUSIC);
         $this->itunesSearch->setAttribute('iPadSoftware');
     }
-    
+
     /**
      * @expectedException \LogicException
      */
@@ -196,7 +196,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     {
         $this->itunesSearch->setAttribute('albumTerm');
     }
-    
+
     /**
      * @expectedException \LogicException
      */
@@ -205,12 +205,12 @@ class TunesTest extends \PHPUnit_Framework_TestCase
         $this->itunesSearch->setMediaType(Tunes::MEDIATYPE_MUSIC);
         $this->itunesSearch->setAttribute('actorTerm');
     }
-    
+
     public function testGetListOfCountries()
     {
         $this->assertInternalType('array', $this->itunesSearch->getCountries());
     }
-    
+
     public function testQueryWithCustomSettings()
     {
         $this->itunesSearch->setMediaType('podcast');
@@ -220,7 +220,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
         $this->itunesSearch->setLimit(1);
         $this->itunesSearch->setVersion(1);
         $this->itunesSearch->setExplicit('no');
-        
+
         $this->assertEquals(
             'http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?entity=album&media=podcast&attribute=authorTerm&lang=ja_jp&limit=1&version=1&explicit=no&term=star',
             $this->itunesSearch->getRawRequestUrl()

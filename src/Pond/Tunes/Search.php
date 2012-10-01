@@ -17,11 +17,11 @@ class Search extends Tunes
 {
     /**
      * URI for search service
-     * 
+     *
      * @var string
      */
     private $serviceUri = 'http://itunes.apple.com/search?';
-    
+
     /**
      * @var array
      */
@@ -35,24 +35,24 @@ class Search extends Tunes
         if ('' == $this->rawRequestUrl) {
             $this->buildSpecificRequestUri();
         }
-        
+
         return $this->rawRequestUrl;
     }
-    
+
     /**
      * Return search term
-     * 
+     *
      * @return array
      */
     public function getTerms()
     {
         return $this->searchTerms;
     }
-    
+
     /**
      * Add new search terms
-     * 
-     * @param  string|array $terms
+     *
+     * @param string $terms
      *
      * @return Search
      */
@@ -65,9 +65,9 @@ class Search extends Tunes
         for ($i=0; $i<count($terms); $i++) {
             $terms[$i] = str_replace(' ', '+', $terms[$i]);
         }
-        
+
         $this->searchTerms = array_merge($terms, $this->searchTerms);
-        
+
         return $this;
     }
 

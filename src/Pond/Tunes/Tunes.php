@@ -356,7 +356,7 @@ abstract class Tunes
      *
      * @throws \BadMethodCallException
      * @throws \RuntimeException
-     * @return  ResultSet|string
+     * @return ResultSet|string
      */
     public function request()
     {
@@ -453,13 +453,13 @@ abstract class Tunes
      *     - Lookup
      *     - Search
      */
-    protected abstract function buildSpecificRequestUri();
+    abstract protected function buildSpecificRequestUri();
 
     /**
      * Magic method for retrieving properties
      *
      * @throws \BadMethodCallException
-     * @return array
+     * @return string
      */
     public function getResults()
     {
@@ -681,7 +681,7 @@ abstract class Tunes
      * Set the flag indicating whether or not you want to include
      * explicit content in your search result
      *
-     * @param  string $setting
+     * @param string $setting
      *
      * @return Tunes
      */

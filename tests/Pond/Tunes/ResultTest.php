@@ -17,7 +17,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
      * @var ResultSet
      */
     protected $resultSet;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -28,36 +28,36 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         parent::tearDown();
-        
+
         $this->resultSet = null;
     }
-    
+
     public function testResultIteration()
     {
         foreach ($this->resultSet as $result) {
             $this->isInstanceOf('\Pond\Tunes\Result', $result);
         }
     }
-    
+
     public function testResultIterationGet()
     {
         foreach ($this->resultSet as $result) {
             $this->assertEquals('James Horner', $result->artistName);
         }
     }
-    
+
     public function testResultIterationGetUnknown()
     {
         foreach ($this->resultSet as $result) {
             $this->assertEquals(null, $result->artistNameddd);
         }
     }
-    
+
     public function testSeek()
     {
         $this->resultSet->seek(0);
     }
-    
+
     /**
      * @expectedException OutOfBoundsException
      */
@@ -65,7 +65,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     {
         $this->resultSet->seek(23);
     }
-    
+
     public function testResultKey()
     {
         $this->assertEquals(0, $this->resultSet->key());

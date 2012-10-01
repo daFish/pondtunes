@@ -17,33 +17,33 @@ class Lookup extends Tunes
 {
     /**
      * URI for lookup service
-     * 
+     *
      * @var string
      */
     protected $serviceUri = 'http://itunes.apple.com/lookup?';
-    
+
     /**
      * @var integer
      */
     protected $lookupId = 0;
-    
+
     /**
      * @var integer
      */
     protected $amgArtistIds = array();
-    
+
     /**
      * @var string
      */
     protected $entity = '';
-    
+
     /**
      * {@inheritDoc}
      */
     protected function buildSpecificRequestUri()
     {
         $requestParameters = array();
-        
+
         // trigger parent::_buildRequestUri
         $uri = parent::buildRequestUri();
         if (!empty($uri)) {
@@ -53,20 +53,20 @@ class Lookup extends Tunes
         if ($this->lookupId === 0 XOR !empty($this->amgArtistIds)) {
             throw new \LogicException('There is no lookupId or amgArtistId set.');
         }
-        
+
         // add lookupId
         if ($this->lookupId > 0) {
             $requestParameters[] = 'id=' . $this->lookupId;
         }
-        
+
         // add amgArtistIds if present
         if (!empty($this->amgArtistIds)) {
             $requestParameters[] = 'amgArtistId=' . implode(',', $this->amgArtistIds);
         }
-        
+
         // build request parameter string
         $request = implode('&', $requestParameters);
-        
+
         $this->rawRequestUrl = $this->getUri() . $request;
     }
 
@@ -81,47 +81,47 @@ class Lookup extends Tunes
 
         return $this->rawRequestUrl;
     }
-    
+
     /**
      * Set the lookupId
-     * 
+     *
      * @param  integer $id
      * @return Lookup
      */
     public function setLookupId($id = 0)
     {
-        $this->lookupId = (integer)$id;
-        
+        $this->lookupId = (integer) $id;
+
         return $this;
     }
-    
+
     /**
      * Get the set lookupId
-     * 
+     *
      * @return integer
      */
     public function getLookupId()
     {
         return $this->lookupId;
     }
-    
+
     /**
      * Set an amgArtistId
-     * 
+     *
      * @param  integer $id
      * @return Lookup
      */
     public function setAmgArtistId($id = 0)
     {
-        $this->amgArtistIds[] = (integer)$id;
-        
+        $this->amgArtistIds[] = (integer) $id;
+
         return $this;
     }
-    
+
     /**
      * Get all set amgArtistIds
-     * 
-     * @return array
+     *
+     * @return array<integer>
      */
     public function getAmgArtistIds()
     {
