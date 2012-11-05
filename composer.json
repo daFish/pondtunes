@@ -15,6 +15,6 @@
     },
     "require": {
         "php": ">=5.3.2",
-        "kriswallsmith/buzz": "v0.7"
+        "kriswallsmith/buzz": "0.7"
     }
 }
