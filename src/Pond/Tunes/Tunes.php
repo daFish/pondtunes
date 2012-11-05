@@ -118,42 +118,43 @@ abstract class Tunes
     protected $entityList = array(
         self::MEDIATYPE_MOVIE => array(
             'movieArtist',
-            'movie'
+            'movie',
         ),
         self::MEDIATYPE_PODCAST => array(
             'podcastAuthor',
-            'podcast'
+            'podcast',
         ),
         self::MEDIATYPE_MUSIC => array(
             'musicArtist',
             'musicTrack',
             'album',
             'musicVideo',
-            'mix'
+            'mix',
+            'song',
         ),
         self::MEDIATYPE_MUSICVIDEO => array(
             'musicArtist',
-            'musicVideo'
+            'musicVideo',
         ),
         self::MEDIATYPE_AUDIOBOOK => array(
             'audiobookAuthor',
-            'audiobook'
+            'audiobook',
         ),
         self::MEDIATYPE_SHORTFILM => array(
             'shortFilmArtist',
-            'shortFilm'
+            'shortFilm',
         ),
         self::MEDIATYPE_TVSHOW => array(
             'tvEpisode',
-            'tvSeason'
+            'tvSeason',
         ),
         self::MEDIATYPE_SOFTWARE => array(
             'software',
             'iPadSoftware',
-            'macSoftware'
+            'macSoftware',
         ),
         self::MEDIATYPE_EBOOK => array(
-            'ebook'
+            'ebook',
         ),
         self::MEDIATYPE_ALL => array(
             'movie',
@@ -164,7 +165,7 @@ abstract class Tunes
             'mix',
             'audiobook',
             'tvSeason',
-            'allTrack'
+            'allTrack',
         ),
     );
 
