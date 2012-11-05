@@ -11,9 +11,15 @@
          syntaxCheck="false"
          bootstrap="tests/bootstrap.php"
 >
+    <testsuites>
+        <testsuite name="Pond">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
     <filter>
         <whitelist>
-            <directory suffix=".php">./lib/Pond/</directory>
+            <directory suffix=".php">./src/Pond/</directory>
         </whitelist>
     </filter>
 </phpunit>
