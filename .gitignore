@@ -1,5 +1,8 @@
 .idea/
+.settings/
 /vendor
 composer.lock
 composer.phar
 phpunit.xml
+.buildpath
+.project
