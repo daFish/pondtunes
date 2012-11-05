@@ -177,7 +177,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
                             ->setCountry('de')
                             ->setCallback('wsCallback');
 
-        $this->assertEquals('http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?entity=album&country=de&callback=wsCallback&term=star+trek', $this->itunesSearch->getRawRequestUrl());
+        $this->assertEquals('https://itunes.apple.com/search?entity=album&country=de&callback=wsCallback&term=star+trek', $this->itunesSearch->getRawRequestUrl());
     }
 
     /**
@@ -222,7 +222,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
         $this->itunesSearch->setExplicit('no');
 
         $this->assertEquals(
-            'http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsSearch?entity=album&media=podcast&attribute=authorTerm&lang=ja_jp&limit=1&version=1&explicit=no&term=star',
+            'https://itunes.apple.com/search?entity=album&media=podcast&attribute=authorTerm&lang=ja_jp&limit=1&version=1&explicit=no&term=star',
             $this->itunesSearch->getRawRequestUrl()
         );
     }

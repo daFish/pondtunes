@@ -20,7 +20,7 @@ class Lookup extends Tunes
      *
      * @var string
      */
-    protected $serviceUri = 'http://itunes.apple.com/lookup?';
+    protected $serviceUri = 'https://itunes.apple.com/lookup?';
 
     /**
      * @var integer

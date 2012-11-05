@@ -20,7 +20,7 @@ class Search extends Tunes
      *
      * @var string
      */
-    private $serviceUri = 'http://itunes.apple.com/search?';
+    private $serviceUri = 'https://itunes.apple.com/search?';
 
     /**
      * @var array
