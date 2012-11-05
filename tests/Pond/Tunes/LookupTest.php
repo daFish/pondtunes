@@ -19,11 +19,21 @@ class LookupTest extends \PHPUnit_Framework_TestCase
     /**
      * @var Lookup
      */
-    protected $lookup = null;
+    protected $lookup             = null;
+    protected $httpClient         = null;
+    protected $httpClientResponse = null;
 
     public function setUp()
     {
+        $this->httpClient = $this->getMockBuilder('\Buzz\Browser')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->lookup = new Lookup();
+        $this->lookup->setHttpClient($this->httpClient);
+
+        $this->httpClientResponse = $this->getMockBuilder('\Buzz\Message\Response')
+            ->getMock();
     }
 
     public function testAmgArtistId()
@@ -38,16 +48,37 @@ class LookupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(123456, $this->lookup->getLookupId());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testRequestIsNotOk()
+    {
+        $this->httpClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($this->httpClientResponse));
+
+        $this->httpClientResponse->expects($this->once())
+            ->method('isOk')
+            ->will($this->returnValue(false));
+
+        $this->lookup->setAmgArtistId(39429);
+
+        $this->lookup->request();
+    }
+
     public function testQueryWithArrayResult()
     {
-        $this->markTestIncomplete('Fix client stuff');
-        $this->_httpClientMock->expects($this->once())
-                              ->method('send')
-                              ->will($this->returnValue($this->_httpResponseMock));
+        $this->httpClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($this->httpClientResponse));
 
-        $this->_httpResponseMock->expects($this->once())
-                                ->method('getBody')
-                                ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
+        $this->httpClientResponse->expects($this->once())
+            ->method('isOk')
+            ->will($this->returnValue(true));
+
+        $this->httpClientResponse->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
         $this->lookup->setAmgArtistId(39429);
         $this->lookup->setResultFormat('array');
@@ -57,21 +88,27 @@ class LookupTest extends \PHPUnit_Framework_TestCase
 
     public function testQueryWithJsonResult()
     {
-        $this->markTestIncomplete('Fix client stuff');
-        /*$this->_httpClientMock->expects($this->once())
-                              ->method('send')
-                              ->will($this->returnValue($this->_httpResponseMock));
+        $this->httpClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($this->httpClientResponse));
 
-        $this->_httpResponseMock->expects($this->once())
-                                ->method('getBody')
-                                ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
-        */
+        $this->httpClientResponse->expects($this->once())
+            ->method('isOk')
+            ->will($this->returnValue(true));
+
+        $this->httpClientResponse->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
+
         $this->lookup->setAmgArtistId(39429);
 
         $this->lookup->request();
 
         $this->assertEquals(1, $this->lookup->getResultCount());
-        $this->assertEquals('[{"wrapperType":"artist","artistType":"Artist","artistName":"James Horner","artistLinkUrl":"http:\/\/itunes.apple.com\/us\/artist\/james-horner\/id266740?uo=4","artistId":266740,"amgArtistId":39429,"amgVideoArtistId":null,"primaryGenreName":"Soundtrack","primaryGenreId":16}]', $this->lookup->getResults());
+        $this->assertEquals(
+            '[{"wrapperType":"artist","artistType":"Artist","artistName":"James Horner","artistLinkUrl":"http:\/\/itunes.apple.com\/us\/artist\/james-horner\/id266740?uo=4","artistId":266740,"amgArtistId":39429,"amgVideoArtistId":null,"primaryGenreName":"Soundtrack","primaryGenreId":16}]',
+            $this->lookup->getResults()
+        );
     }
 
     /**
@@ -87,14 +124,17 @@ class LookupTest extends \PHPUnit_Framework_TestCase
      */
     public function testQueryResultSetWithArraySet()
     {
-        $this->markTestIncomplete('Fix client stuff');
-        $this->_httpClientMock->expects($this->once())
-                              ->method('send')
-                              ->will($this->returnValue($this->_httpResponseMock));
+        $this->httpClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($this->httpClientResponse));
 
-        $this->_httpResponseMock->expects($this->once())
-                                ->method('getBody')
-                                ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
+        $this->httpClientResponse->expects($this->once())
+            ->method('isOk')
+            ->will($this->returnValue(true));
+
+        $this->httpClientResponse->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
         $this->lookup->setAmgArtistId(39429);
         $this->lookup->setResultFormat('array');
@@ -109,14 +149,17 @@ class LookupTest extends \PHPUnit_Framework_TestCase
      */
     public function testQueryResultCountSetWithArraySet()
     {
-        $this->markTestIncomplete('Fix client stuff');
-        $this->_httpClientMock->expects($this->once())
-                              ->method('send')
-                              ->will($this->returnValue($this->_httpResponseMock));
+        $this->httpClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($this->httpClientResponse));
 
-        $this->_httpResponseMock->expects($this->once())
-                                ->method('getBody')
-                                ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
+        $this->httpClientResponse->expects($this->once())
+            ->method('isOk')
+            ->will($this->returnValue(true));
+
+        $this->httpClientResponse->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
         $this->lookup->setAmgArtistId(39429);
         $this->lookup->setResultFormat('array');

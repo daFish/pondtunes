@@ -318,8 +318,30 @@ abstract class Tunes
         if (!empty($options)) {
             $this->setOptions($options);
         }
+    }
 
-        $this->httpClient = new Browser();
+    /**
+     * @return Browser
+     */
+    public function getHttpClient()
+    {
+        if (null === $this->httpClient) {
+            $this->httpClient = new Browser();
+        }
+
+        return $this->httpClient;
+    }
+
+    /**
+     * @param Browser $browser
+     *
+     * @return Tunes
+     */
+    public function setHttpClient(Browser $browser)
+    {
+        $this->httpClient = $browser;
+
+        return $this;
     }
 
     /**
@@ -367,7 +389,7 @@ abstract class Tunes
 
         $this->buildSpecificRequestUri();
 
-        $response = $this->httpClient->get($this->getRawRequestUrl());
+        $response = $this->getHttpClient()->get($this->getRawRequestUrl());
         if (true !== $response->isOk()) {
             throw new \RuntimeException('The request was not successful.');
         }

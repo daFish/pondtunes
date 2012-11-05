@@ -19,13 +19,17 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     /**
      * @var Search
      */
-    protected $itunesSearch =   null;
+    protected $itunesSearch = null;
+    protected $clientMock   = null;
 
     public function setUp()
     {
-        parent::setUp();
+        $this->clientMock = $this->getMockBuilder('\Buzz\Browser')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->itunesSearch = new Search();
+        $this->itunesSearch->setHttpClient($this->clientMock);
     }
 
     public function testSetTermsAsArray()
@@ -174,8 +178,8 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     public function testGetRawRequestUrl()
     {
         $this->itunesSearch->setTerms(array('star', 'trek'))
-                            ->setCountry('de')
-                            ->setCallback('wsCallback');
+            ->setCountry('de')
+            ->setCallback('wsCallback');
 
         $this->assertEquals('https://itunes.apple.com/search?entity=album&country=de&callback=wsCallback&term=star+trek', $this->itunesSearch->getRawRequestUrl());
     }
