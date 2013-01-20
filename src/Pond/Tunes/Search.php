@@ -50,23 +50,31 @@ class Search extends Tunes
     }
 
     /**
-     * Add new search terms
+     * Add search terms. New terms are appended unless $reset is set to `false`.
      *
-     * @param string $terms
+     * @param array|string $terms Terms to be searched on.
+     * @param boolean      $reset Set to `true` if previously set terms should be reset.
      *
      * @return Search
      */
-    public function setTerms($terms = '')
+    public function setTerms($terms, $reset = false)
     {
+        if ($reset) {
+            $this->searchTerms = array();
+        }
+
+        $searchTerms = array();
         if (!is_array($terms)) {
             $terms = explode(' ', $terms);
         }
 
-        for ($i=0; $i<count($terms); $i++) {
-            $terms[$i] = str_replace(' ', '+', $terms[$i]);
+        foreach ($terms as $term) {
+            $words = explode(' ', $term);
+
+            $searchTerms = array_merge($searchTerms, $words);
         }
 
-        $this->searchTerms = array_merge($terms, $this->searchTerms);
+        $this->searchTerms = array_merge($this->searchTerms, $searchTerms);
 
         return $this;
     }

@@ -34,20 +34,56 @@ class TunesTest extends \PHPUnit_Framework_TestCase
 
     public function testSetTermsAsArray()
     {
-        $this->itunesSearch->setTerms(array('christopher', 'gordon'));
-        $this->assertEquals(array('christopher', 'gordon'), $this->itunesSearch->getTerms());
+        $itunesSearch = new Search();
+        $itunesSearch->setHttpClient($this->clientMock);
+
+        $itunesSearch->setTerms(array('how i met your mother', 'matchmaker'));
+        $this->assertEquals(
+            array('how', 'i', 'met', 'your', 'mother', 'matchmaker'),
+            $itunesSearch->getTerms()
+        );
     }
 
-    public function testSetTermAsString()
+    public function testNewTermsAreAppended()
+    {
+        $itunesSearch = new Search();
+        $itunesSearch->setHttpClient($this->clientMock);
+
+        $itunesSearch->setTerms('how i met your mother');
+        $this->assertEquals(
+            array('how', 'i', 'met', 'your', 'mother'),
+            $itunesSearch->getTerms()
+        );
+
+        $itunesSearch->setTerms(array('matchmaker'));
+        $this->assertEquals(
+            array('how', 'i', 'met', 'your', 'mother', 'matchmaker'),
+            $itunesSearch->getTerms()
+        );
+    }
+
+    public function testTermsNotArray()
     {
         $this->itunesSearch->setTerms('star trek');
         $this->assertEquals(array('star', 'trek'), $this->itunesSearch->getTerms());
     }
 
-    public function testTermsNotArray()
+    public function testResetTermsBeforeSettingNewTerms()
     {
-        $this->itunesSearch->setTerms('star');
-        $this->assertEquals(array('star'), $this->itunesSearch->getTerms());
+        $itunesSearch = new Search();
+        $itunesSearch->setHttpClient($this->clientMock);
+
+        $itunesSearch->setTerms('star trek');
+        $this->assertEquals(
+            array('star', 'trek'),
+            $itunesSearch->getTerms()
+        );
+
+        $itunesSearch->setTerms(array('the bourne identity'), true);
+        $this->assertEquals(
+            array('the', 'bourne', 'identity'),
+            $itunesSearch->getTerms()
+        );
     }
 
     public function testSetGetLimit()
@@ -218,7 +254,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
     public function testQueryWithCustomSettings()
     {
         $this->itunesSearch->setMediaType('podcast');
-        $this->itunesSearch->setTerms('star');
+        $this->itunesSearch->setTerms(array('how i met your mother', 'matchmaker'));
         $this->itunesSearch->setAttribute('authorTerm');
         $this->itunesSearch->setLanguage('ja_jp');
         $this->itunesSearch->setLimit(1);
@@ -226,7 +262,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
         $this->itunesSearch->setExplicit('no');
 
         $this->assertEquals(
-            'https://itunes.apple.com/search?entity=album&media=podcast&attribute=authorTerm&lang=ja_jp&limit=1&version=1&explicit=no&term=star',
+            'https://itunes.apple.com/search?entity=album&media=podcast&attribute=authorTerm&lang=ja_jp&limit=1&version=1&explicit=no&term=how+i+met+your+mother+matchmaker',
             $this->itunesSearch->getRawRequestUrl()
         );
     }
