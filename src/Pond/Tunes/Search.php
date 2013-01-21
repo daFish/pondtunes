@@ -103,6 +103,19 @@ class Search extends Tunes
         return $results;
     }
 
+	/**
+	 * Setup URI for search service
+	 *
+	 * @param $uri
+	 * 
+	 * @return Search
+	 */
+	public function setServiceUrl($uri) {
+		$this->serviceUri = (string) $uri;
+
+		return $this;
+	}
+
     /**
      * {@inheritDoc}
      */
