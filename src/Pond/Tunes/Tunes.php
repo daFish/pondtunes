@@ -482,30 +482,32 @@ abstract class Tunes
      * Magic method for retrieving properties
      *
      * @throws \BadMethodCallException
+     *
      * @return string
      */
     public function getResults()
     {
-        if (self::RESULT_JSON === $this->resultFormat) {
-            return $this->results;
-        } else {
+        if (self::RESULT_JSON !== $this->resultFormat) {
             throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using JSON");
         }
+
+        return $this->results;
     }
 
     /**
      * Get the result count from query()
      *
      * @throws \BadMethodCallException
+     *
      * @return integer
      */
     public function getResultCount()
     {
-        if (self::RESULT_JSON === $this->resultFormat) {
-            return $this->resultCount;
-        } else {
+        if (self::RESULT_JSON !== $this->resultFormat) {
             throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using JSON");
         }
+
+        return $this->resultCount;
     }
 
     /**
@@ -614,6 +616,7 @@ abstract class Tunes
      * @param integer $limit
      *
      * @throws \OutOfBoundsException
+     *
      * @return Tunes
      */
     public function setLimit($limit = 100)
@@ -634,6 +637,7 @@ abstract class Tunes
      * @param array $entity
      *
      * @throws \InvalidArgumentException
+     *
      * @return Tunes
      */
     public function setEntity($entity = array())
