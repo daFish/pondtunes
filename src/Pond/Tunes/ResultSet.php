@@ -13,7 +13,7 @@ namespace Pond\Tunes;
 
 use Pond\Tunes\Result;
 
-class ResultSet implements \SeekableIterator
+class ResultSet implements \SeekableIterator, \Countable
 {
     /**
      * Result
@@ -38,13 +38,7 @@ class ResultSet implements \SeekableIterator
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Seeks to a position
-     * @link http://php.net/manual/en/seekableiterator.seek.php
-     * @param int $position <p>
-     * The position to seek to.
-     * </p>
-     * @return void
+     * {@inheritDoc}
      */
     public function seek($position)
     {
@@ -56,10 +50,7 @@ class ResultSet implements \SeekableIterator
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Return the current element
-     * @link http://php.net/manual/en/iterator.current.php
-     * @return Result Can return any type.
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -67,10 +58,7 @@ class ResultSet implements \SeekableIterator
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Move forward to next element
-     * @link http://php.net/manual/en/iterator.next.php
-     * @return void Any returned value is ignored.
+     * {@inheritDoc}
      */
     public function next()
     {
@@ -78,11 +66,7 @@ class ResultSet implements \SeekableIterator
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Return the key of the current element
-     * @link http://php.net/manual/en/iterator.key.php
-     * @return integer scalar on success, integer
-     * 0 on failure.
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -90,11 +74,7 @@ class ResultSet implements \SeekableIterator
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Checks if current position is valid
-     * @link http://php.net/manual/en/iterator.valid.php
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     * {@inheritDoc}
      */
     public function valid()
     {
@@ -102,13 +82,18 @@ class ResultSet implements \SeekableIterator
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Rewind the Iterator to the first element
-     * @link http://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
+     * {@inheritDoc}
      */
     public function rewind()
     {
         $this->position = 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function count()
+    {
+        return count($this->results);
     }
 }

@@ -71,6 +71,11 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->resultSet->key());
     }
 
+    public function testCount()
+    {
+        $this->assertCount(1, $this->resultSet);
+    }
+
     /**
      * @return array
      */
