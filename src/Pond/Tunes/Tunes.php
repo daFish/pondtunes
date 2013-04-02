@@ -543,7 +543,7 @@ abstract class Tunes
      *
      * @return Tunes
      */
-    public function setCountry($country = '')
+    public function setCountry($country = 'us')
     {
         if (in_array($country, self::$countryList)) {
             $this->defaultOptions['country'] = $country;
@@ -559,7 +559,7 @@ abstract class Tunes
      *
      * @return Tunes
      */
-    public function setLanguage($language = '')
+    public function setLanguage($language = 'en_us')
     {
         if (in_array($language, $this->languageList)) {
             $this->defaultOptions['language'] = $language;
@@ -575,7 +575,7 @@ abstract class Tunes
      *
      * @return Tunes
      */
-    public function setMediaType($mediatype = '')
+    public function setMediaType($mediatype = self::MEDIATYPE_ALL)
     {
         if (in_array($mediatype, $this->mediaTypes)) {
             $this->defaultOptions['mediaType'] = $mediatype;
