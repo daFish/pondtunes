@@ -13,6 +13,7 @@ namespace Pond\Tunes;
 
 use Pond\Tunes\Tunes;
 use Pond\Tunes\Search;
+use HttpAdapter\HttpAdapterInterface;
 
 class TunesTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,22 +21,27 @@ class TunesTest extends \PHPUnit_Framework_TestCase
      * @var Search
      */
     protected $itunesSearch = null;
-    protected $clientMock   = null;
 
+    /**
+     * @var HttpAdapterInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $clientMock = null;
+
+    /**
+     * {@inheritDoc}
+     */
     public function setUp()
     {
-        $this->clientMock = $this->getMockBuilder('\Buzz\Browser')
+        $this->clientMock = $this->getMockBuilder('\HttpAdapter\HttpAdapterInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->itunesSearch = new Search();
-        $this->itunesSearch->setHttpClient($this->clientMock);
+        $this->itunesSearch = new Search($this->clientMock);
     }
 
     public function testSetTermsAsArray()
     {
-        $itunesSearch = new Search();
-        $itunesSearch->setHttpClient($this->clientMock);
+        $itunesSearch = new Search($this->clientMock);
 
         $itunesSearch->setTerms(array('how i met your mother', 'matchmaker'));
         $this->assertEquals(
@@ -46,8 +52,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
 
     public function testNewTermsAreAppended()
     {
-        $itunesSearch = new Search();
-        $itunesSearch->setHttpClient($this->clientMock);
+        $itunesSearch = new Search($this->clientMock);
 
         $itunesSearch->setTerms('how i met your mother');
         $this->assertEquals(
@@ -70,8 +75,7 @@ class TunesTest extends \PHPUnit_Framework_TestCase
 
     public function testResetTermsBeforeSettingNewTerms()
     {
-        $itunesSearch = new Search();
-        $itunesSearch->setHttpClient($this->clientMock);
+        $itunesSearch = new Search($this->clientMock);
 
         $itunesSearch->setTerms('star trek');
         $this->assertEquals(

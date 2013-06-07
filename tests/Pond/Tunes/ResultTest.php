@@ -18,6 +18,9 @@ class ResultTest extends \PHPUnit_Framework_TestCase
      */
     protected $resultSet;
 
+    /**
+     * {@inheritDoc}
+     */
     public function setUp()
     {
         parent::setUp();
@@ -25,6 +28,9 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->resultSet = new ResultSet($this->getFixtures());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function tearDown()
     {
         parent::tearDown();

@@ -12,7 +12,7 @@
 namespace Pond\Tunes;
 
 use Pond\Tunes\ResultSet;
-use Buzz\Browser;
+use HttpAdapter\HttpAdapterInterface;
 
 abstract class Tunes
 {
@@ -305,42 +305,41 @@ abstract class Tunes
     protected $explicitTypes = array('yes', 'no');
 
     /**
-     * @var Browser
+     * @var HttpAdapterInterface
      */
     protected $httpClient;
 
     /**
      * Constructor
      *
-     * @param array $options
+     * @param HttpAdapterInterface $client
+     * @param array                $options
      */
-    public function __construct(array $options = array())
+    public function __construct(HttpAdapterInterface $client, array $options = array())
     {
+        $this->httpClient = $client;
+
         if (!empty($options)) {
             $this->setOptions($options);
         }
     }
 
     /**
-     * @return Browser
+     * @return HttpAdapterInterface
      */
     public function getHttpClient()
     {
-        if (null === $this->httpClient) {
-            $this->httpClient = new Browser();
-        }
-
         return $this->httpClient;
     }
 
     /**
-     * @param Browser $browser
+     * @param HttpAdapterInterface $client
      *
      * @return Tunes
      */
-    public function setHttpClient(Browser $browser)
+    public function setHttpClient(HttpAdapterInterface $client)
     {
-        $this->httpClient = $browser;
+        $this->httpClient = $client;
 
         return $this;
     }
@@ -390,12 +389,14 @@ abstract class Tunes
 
         $this->buildSpecificRequestUri();
 
-        $response = $this->getHttpClient()->get($this->getRawRequestUrl());
-        if (true !== $response->isOk()) {
+        try {
+            if (null === $content = $this->getHttpClient()->getContent($this->getRawRequestUrl())) {
+                throw new \RuntimeException('The request was not successful.');
+            }
+        } catch (\RuntimeException $e) {
             throw new \RuntimeException('The request was not successful.');
         }
 
-        $content = $response->getContent();
         if (self::RESULT_ARRAY === $this->resultFormat) {
             $resultSet = json_decode($content, true);
             $resultSet = new ResultSet($resultSet['results']);
