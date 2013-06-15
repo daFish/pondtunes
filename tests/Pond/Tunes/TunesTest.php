@@ -266,4 +266,22 @@ class TunesTest extends \PHPUnit_Framework_TestCase
             $this->itunesSearch->getRawRequestUrl()
         );
     }
+
+    /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testGetResulsWithResultFormatJsonThrowsException()
+    {
+        $this->itunesSearch->setResultFormat(Tunes::RESULT_ARRAY);
+        $this->itunesSearch->getResults();
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testGetResultCountWithResultFormatJsonThrowsException()
+    {
+        $this->itunesSearch->setResultFormat(Tunes::RESULT_ARRAY);
+        $this->itunesSearch->getResultCount();
+    }
 }

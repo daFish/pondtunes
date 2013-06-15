@@ -379,6 +379,7 @@ abstract class Tunes
      *
      * @throws \BadMethodCallException
      * @throws \RuntimeException
+     *
      * @return ResultSet|string
      */
     public function request()
@@ -487,8 +488,8 @@ abstract class Tunes
      */
     public function getResults()
     {
-        if (self::RESULT_JSON !== $this->resultFormat) {
-            throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using JSON");
+        if (self::RESULT_JSON != $this->resultFormat) {
+            throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using Array");
         }
 
         return $this->results;
@@ -503,8 +504,8 @@ abstract class Tunes
      */
     public function getResultCount()
     {
-        if (self::RESULT_JSON !== $this->resultFormat) {
-            throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using JSON");
+        if (self::RESULT_JSON != $this->resultFormat) {
+            throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using Array");
         }
 
         return $this->resultCount;
