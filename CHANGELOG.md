@@ -1,8 +1,8 @@
-### 0.3.4 / 2013-06-15
+### 0.4.1 / 2013-06-15
 
 * Fixed wrong condition and exception message when using getResults() & getResultCount()
 
-### 0.3.3 / 2013-04-02
+### 0.4.0 / 2013-04-02
 
 * Added year range to LICENSE.
 * Added \Countable-interface to ResultSet-class.
