@@ -15,7 +15,7 @@
     },
     "require": {
         "php": ">=5.3.2",
-        "kriswallsmith/buzz": "0.7"
+        "toin0u/http-adapter": "@stable"
     },
     "suggest": {
         "pond/tunes-bundle": "Integrate library with Symfony 2 applications"
