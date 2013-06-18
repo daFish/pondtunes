@@ -13,27 +13,30 @@ namespace Pond\Tunes;
 
 use Pond\Tunes\Tunes;
 use Pond\Tunes\Lookup;
+use HttpAdapter\HttpAdapterInterface;
 
 class LookupTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Lookup
      */
-    protected $lookup             = null;
-    protected $httpClient         = null;
-    protected $httpClientResponse = null;
+    protected $lookup = null;
 
+    /**
+     * @var HttpAdapterInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $clientMock   = null;
+
+    /**
+     * {@inheritDoc}
+     */
     public function setUp()
     {
-        $this->httpClient = $this->getMockBuilder('\Buzz\Browser')
+        $this->clientMock = $this->getMockBuilder('\HttpAdapter\HttpAdapterInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->lookup = new Lookup();
-        $this->lookup->setHttpClient($this->httpClient);
-
-        $this->httpClientResponse = $this->getMockBuilder('\Buzz\Message\Response')
-            ->getMock();
+        $this->lookup = new Lookup($this->clientMock);
     }
 
     public function testAmgArtistId()
@@ -53,13 +56,9 @@ class LookupTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestIsNotOk()
     {
-        $this->httpClient->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->httpClientResponse));
-
-        $this->httpClientResponse->expects($this->once())
-            ->method('isOk')
-            ->will($this->returnValue(false));
+        $this->clientMock->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(null));
 
         $this->lookup->setAmgArtistId(39429);
 
@@ -68,15 +67,7 @@ class LookupTest extends \PHPUnit_Framework_TestCase
 
     public function testQueryWithArrayResult()
     {
-        $this->httpClient->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->httpClientResponse));
-
-        $this->httpClientResponse->expects($this->once())
-            ->method('isOk')
-            ->will($this->returnValue(true));
-
-        $this->httpClientResponse->expects($this->once())
+        $this->clientMock->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
@@ -88,15 +79,7 @@ class LookupTest extends \PHPUnit_Framework_TestCase
 
     public function testQueryWithJsonResult()
     {
-        $this->httpClient->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->httpClientResponse));
-
-        $this->httpClientResponse->expects($this->once())
-            ->method('isOk')
-            ->will($this->returnValue(true));
-
-        $this->httpClientResponse->expects($this->once())
+        $this->clientMock->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
@@ -124,15 +107,7 @@ class LookupTest extends \PHPUnit_Framework_TestCase
      */
     public function testQueryResultSetWithArraySet()
     {
-        $this->httpClient->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->httpClientResponse));
-
-        $this->httpClientResponse->expects($this->once())
-            ->method('isOk')
-            ->will($this->returnValue(true));
-
-        $this->httpClientResponse->expects($this->once())
+        $this->clientMock->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
@@ -149,15 +124,7 @@ class LookupTest extends \PHPUnit_Framework_TestCase
      */
     public function testQueryResultCountSetWithArraySet()
     {
-        $this->httpClient->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->httpClientResponse));
-
-        $this->httpClientResponse->expects($this->once())
-            ->method('isOk')
-            ->will($this->returnValue(true));
-
-        $this->httpClientResponse->expects($this->once())
+        $this->clientMock->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue(file_get_contents(__DIR__ . '/_fixtures/response_lookup.txt')));
 
