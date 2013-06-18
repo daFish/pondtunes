@@ -31,8 +31,11 @@ Basic example of querying the Apple iTunes Store API:
 
 use Pond\Tunes\Search;
 use Pond\Tunes\Tunes;
+use HttpAdapter\CurlHttpAdapter;
 
-$search = new Search();
+$httpAdapter = new CurlHttpAdapter();
+
+$search = new Search($httpAdapter);
 $search->setTerms('angry birds')
        ->setEntity(array(Tunes::MEDIATYPE_SOFTWARE => 'software'));
 

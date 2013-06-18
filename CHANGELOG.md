@@ -1,3 +1,7 @@
+### 1.0.0 / ?
+
+* Enabled usage of different HTTP clients (Fixes #6)
+
 ### 0.4.1 / 2013-06-15
 
 * Fixed wrong condition and exception message when using getResults() & getResultCount()
