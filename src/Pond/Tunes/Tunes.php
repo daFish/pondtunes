@@ -11,20 +11,21 @@
 
 namespace Pond\Tunes;
 
+use Pond\Tunes\Result\ResultFormatter;
 use Pond\Tunes\ResultSet;
 use HttpAdapter\HttpAdapterInterface;
 
 abstract class Tunes
 {
     /**
-     * @var array
+     * @var ResultFormatter
      */
-    private $results = array();
+    private $resultFormatter;
 
     /**
-     * @var integer
+     * @var string
      */
-    private $resultCount = 0;
+    private $resultFormat = 'json';
 
     /**
      * Properties with default values
@@ -274,29 +275,6 @@ abstract class Tunes
     /**
      * @var string
      */
-    const RESULT_JSON = 'json';
-
-    /**
-     * @var string
-     */
-    const RESULT_ARRAY = 'array';
-
-    /**
-     * @var array
-     */
-    protected $resultFormats = array(
-        self::RESULT_ARRAY,
-        self::RESULT_JSON
-    );
-
-    /**
-     * @var string
-     */
-    protected $resultFormat = self::RESULT_JSON;
-
-    /**
-     * @var string
-     */
     protected $rawRequestUrl = '';
 
     /**
@@ -313,11 +291,17 @@ abstract class Tunes
      * Constructor
      *
      * @param HttpAdapterInterface $client
+     * @param ResultFormatter      $resultFormatter
      * @param array                $options
      */
-    public function __construct(HttpAdapterInterface $client, array $options = array())
+    public function __construct(
+        HttpAdapterInterface $client,
+        ResultFormatter $resultFormatter,
+        array $options = array()
+    )
     {
-        $this->httpClient = $client;
+        $this->httpClient      = $client;
+        $this->resultFormatter = $resultFormatter;
 
         if (!empty($options)) {
             $this->setOptions($options);
@@ -398,20 +382,7 @@ abstract class Tunes
             throw new \RuntimeException('The request was not successful.');
         }
 
-        if (self::RESULT_ARRAY === $this->resultFormat) {
-            $resultSet = json_decode($content, true);
-            $resultSet = new ResultSet($resultSet['results']);
-
-            return $resultSet;
-        } else {
-            // convert JSON-string to array
-            $jsonString = json_decode($content);
-
-            $this->resultCount = (integer) $jsonString->resultCount;
-            $this->results     = json_encode($jsonString->results);
-
-            return $this->results;
-        }
+        return $this->resultFormatter->getResult($this->resultFormat, $content);
     }
 
     /**
@@ -479,38 +450,6 @@ abstract class Tunes
      *     - Search
      */
     abstract protected function buildSpecificRequestUri();
-
-    /**
-     * Magic method for retrieving properties
-     *
-     * @throws \BadMethodCallException
-     *
-     * @return string
-     */
-    public function getResults()
-    {
-        if (self::RESULT_JSON != $this->resultFormat) {
-            throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using Array");
-        }
-
-        return $this->results;
-    }
-
-    /**
-     * Get the result count from query()
-     *
-     * @throws \BadMethodCallException
-     *
-     * @return integer
-     */
-    public function getResultCount()
-    {
-        if (self::RESULT_JSON != $this->resultFormat) {
-            throw new \BadMethodCallException("Cannot call '" . __METHOD__ . "' when using Array");
-        }
-
-        return $this->resultCount;
-    }
 
     /**
      * Magic method for accessing properties
@@ -593,11 +532,9 @@ abstract class Tunes
      *
      * @return Tunes
      */
-    public function setResultFormat($format = self::RESULT_ARRAY)
+    public function setResultFormat($format = 'json')
     {
-        if (in_array($format, $this->resultFormats)) {
-            $this->resultFormat = $format;
-        }
+        $this->resultFormat = $format;
 
         return $this;
     }
@@ -699,7 +636,7 @@ abstract class Tunes
      */
     public function setCallback($callback = '')
     {
-        if (self::RESULT_JSON !== $this->getResultFormat()) {
+        if ('json' !== $this->getResultFormat()) {
             throw new \BadMethodCallException('Callback can only be set with RESULT_JSON');
         }
 

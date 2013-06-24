@@ -1,6 +1,7 @@
 ### 1.0.0 / ?
 
 * Enabled usage of different HTTP clients (Fixes #6)
+* Refactored handling of results into dedicated result classes
 
 ### 0.4.1 / 2013-06-15
 
