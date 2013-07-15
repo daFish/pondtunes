@@ -6,7 +6,10 @@
     "homepage": "https://github.com/daFish/pondtunes",
     "license": "MIT",
     "authors": [
-        {"name": "Marcus Stöhr", "email": "dafish@soundtrack-board.de"}
+        {
+            "name": "Marcus Stöhr",
+            "email": "dafish@soundtrack-board.de"
+        }
     ],
     "autoload": {
         "psr-0": {
@@ -18,6 +21,11 @@
         "toin0u/http-adapter": "@stable"
     },
     "suggest": {
-        "pond/tunes-bundle": "Integrate library with Symfony 2 applications"
+        "pond/tunes-bundle": "Integrate with Symfony 2 applications"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
