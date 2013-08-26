@@ -7,9 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -19,7 +17,10 @@
       <header>
         <h1>PondTunes</h1>
         <p>Small library to query the Apple iTunes Webservice</p>
+
         <p class="view"><a href="https://github.com/daFish/pondtunes">View the Project on GitHub <small>daFish/pondtunes</small></a></p>
+
+
         <ul>
           <li><a href="https://github.com/daFish/pondtunes/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/daFish/pondtunes/tarball/master">Download <strong>TAR Ball</strong></a></li>
@@ -27,16 +28,56 @@
         </ul>
       </header>
       <section>
-        <h1>PondTunes</h1>
+        <h1>
+<a name="pondtunes" class="anchor" href="#pondtunes"><span class="octicon octicon-link"></span></a>PondTunes</h1>
 
-<p>PondTunes is a PHP 5.3+ library to query the Apple iTunes Store.</p>
+<p><a href="http://travis-ci.org/daFish/pondtunes"><img src="https://secure.travis-ci.org/daFish/pondtunes.png" alt="Build Status"></a></p>
+
+<p>PondTunes is a PHP 5.3+ library to query the Apple iTunes Store. It is the successor of
+<a href="https://github.com/daFish/Zend_Service_Itunes">https://github.com/daFish/Zend_Service_Itunes</a>.</p>
+
+<p>This library is still under development but feel free to contribute in any way.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation:</h2>
+
+<p>Add PondTunes to your <code>composer.json</code>:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="s2">"require"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"pond/tunes"</span><span class="o">:</span> <span class="s2">"*"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="use-pondtunes" class="anchor" href="#use-pondtunes"><span class="octicon octicon-link"></span></a>Use PondTunes?</h2>
+
+<p>Basic example of querying the Apple iTunes Store API:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Pond\Tunes\Search</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Pond\Tunes\Tunes</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">HttpAdapter\CurlHttpAdapter</span><span class="p">;</span>
+
+<span class="nv">$httpAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CurlHttpAdapter</span><span class="p">();</span>
+
+<span class="nv">$search</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Search</span><span class="p">(</span><span class="nv">$httpAdapter</span><span class="p">);</span>
+<span class="nv">$search</span><span class="o">-&gt;</span><span class="na">setTerms</span><span class="p">(</span><span class="s1">'angry birds'</span><span class="p">)</span>
+       <span class="o">-&gt;</span><span class="na">setEntity</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nx">Tunes</span><span class="o">::</span><span class="na">MEDIATYPE_SOFTWARE</span> <span class="o">=&gt;</span> <span class="s1">'software'</span><span class="p">));</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$search</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">();</span>
+</pre></div>
+
+<p><em>$result</em> contains the result in JSON. You can easily return this result in any AJAX-request.</p>
       </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/daFish">daFish</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/daFish">daFish</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
     
   </body>
 </html>
