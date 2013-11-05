@@ -40,4 +40,6 @@ $search->setEntity(
     ->setCountry('de');
 
 $results = $search->request();
-var_dump($results);
+foreach ($results as $result) {
+    // do something with the result
+}
