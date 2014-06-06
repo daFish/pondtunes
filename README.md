@@ -2,6 +2,7 @@ PondTunes
 =========
 
 [![Build Status](https://secure.travis-ci.org/daFish/pondtunes.png)](http://travis-ci.org/daFish/pondtunes)
+[![Dependency Status](https://www.versioneye.com/user/projects/5391626e46c473c0260001ec/badge.svg)](https://www.versioneye.com/user/projects/5391626e46c473c0260001ec)
 
 PondTunes is a PHP 5.3+ library to query the Apple iTunes Store. It is the successor of
 https://github.com/daFish/Zend_Service_Itunes.
